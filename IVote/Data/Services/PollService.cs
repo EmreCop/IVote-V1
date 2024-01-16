@@ -15,7 +15,7 @@ namespace IVote.Data.Services
 			}
 		}
 
-		public Poll GetKandidaatById(int id)
+		public Poll GetPollById(int id)
 		{
 			using (var contex = _dbContextFactory.CreateDbContext())
 			{
@@ -24,7 +24,7 @@ namespace IVote.Data.Services
 			}
 		}
 
-		public void UpdateKandidaat(Poll poll)
+		public void UpdatePoll(Poll poll)
 		{
 
 			if (poll == null)
@@ -39,7 +39,7 @@ namespace IVote.Data.Services
 			}
 		}
 
-		public List<Poll> GetallKandidaten()
+		public List<Poll> GetallPoll()
 		{
 			using (var context = _dbContextFactory.CreateDbContext())
 			{
@@ -49,11 +49,11 @@ namespace IVote.Data.Services
 
 		}
 
-		public void RemoveKandidaatById(int id)
+		public void RemovePollById(int id)
 		{
 			using (var context = _dbContextFactory.CreateDbContext())
 			{
-				var poll = GetKandidaatById(id);
+				var poll = GetPollById(id);
 				context.Polls.Remove(poll);
 				context.SaveChanges();
 			}
