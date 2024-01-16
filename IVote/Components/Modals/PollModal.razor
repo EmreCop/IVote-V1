@@ -1,0 +1,136 @@
+﻿@inherits ComponentBase
+@inject PollService pollservice
+@inject KandidaatService kandidaatService
+@rendermode InteractiveServer
+
+
+<div class="modal" tabindex="-1" style="display: @(IsVisible ? "block" : "none")">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">@Title</h5>
+				<button type="button" class="close btn btn-danger" @onclick="CloseModal">
+					<span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				@if (Poll != null && NewPoll == false)
+				{
+					<div class="form-group">
+						<label>Name</label>
+						<input class="form-control" type="text" @bind="Poll.Naam" @bind:after="UpdatePoll" />
+
+						<label>Party</label>
+						<input class="form-control" type="date" @bind="Poll.StartDate" @bind:after="UpdatePoll" />
+
+						<label>ImagePath</label>
+						<input class="form-control" type="date" @bind=Poll.EndDate @bind:after="UpdatePoll" />
+						
+						<KandidaatSelector KanditaatSelected="HandleKandidaatSeleceted"/>
+
+						
+
+					</div>
+				}
+				else
+				{
+					<div class="form-group">
+						<label>Name</label>
+						<input class="form-control" type="text" required @bind="Name"/>
+						<p>*required</p>
+
+						<label>Party</label>
+						<input class="form-control" type="text" required @bind="Party" />
+						<p>*required</p>
+
+						<label>ImagePath</label>
+						<input class="form-control" type="text" @bind="ImagePath" />
+
+						<label>ImageUrl</label>
+						<input class="form-control" type="text" @bind="ImageUrl" />
+
+						<label>Description</label>
+						<input class="form-control" type="text" @bind="Description"/>
+
+						<br />
+						 <button class="btn btn-primary form-control " @onclick="AddKandidaat">Add New Kandidaat</button> 
+
+						 <h5 style="Color:red">@Error</h5>
+					</div>
+				}
+			</div>
+			<div class="modal-footer">
+			</div>
+		</div>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public string? Title { get; set; }
+
+	[Parameter]
+	public bool IsVisible { get; set; }
+
+	[Parameter]
+	public EventCallback<bool> IsVisibleChanged { get; set; }
+
+	[Parameter]
+	public Poll? Poll { get; set; }
+
+	[Parameter]
+	public bool NewPoll { get; set; }
+
+	string? Name;
+	string? Party;
+	string? ImagePath;
+	string? ImageUrl;
+	string? Description;
+
+	string? Error;
+
+
+	private async Task CloseModal()
+	{
+		IsVisible = false;
+		await IsVisibleChanged.InvokeAsync(IsVisible);
+
+	}
+
+
+	private void UpdatePoll()
+	{
+		if (Poll != null)
+		{
+			pollservice.UpdatePoll(Poll);
+		}
+
+	}
+
+	private void AddNewPoll()
+	{
+		if (Name != null && Party != null)
+		{
+			var NewKandidaat = new Kandidaat { Name = Name, Party = Party, ImagePath = ImagePath, ImageUrl = ImageUrl, Description = Description };
+			pollservice.AddPoll(NewKandidaat);
+			CloseModal();
+			Error = "";
+		}
+		else
+		{
+			Error = "Please Fill in all required fields!";
+		}
+	}
+
+	void HandleKandidaatSeleceted(int id)
+	{
+		if( Poll != null && Poll.KanditaatIds == null)
+		{
+			Poll.KanditaatIds = new();
+		}
+		Poll?.KanditaatIds!.Add(id);
+	}
+}
+
+
+

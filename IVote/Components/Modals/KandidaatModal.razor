@@ -1,0 +1,128 @@
+﻿@inherits ComponentBase
+@inject KandidaatService kandidaatservice
+@rendermode InteractiveServer
+
+
+<div class="modal" tabindex="-1" style="display: @(IsVisible ? "block" : "none")">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">@Title</h5>
+				<button type="button" class="close btn btn-danger" @onclick="CloseModal">
+					<span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				@if (kandidaat != null && NewKandidaat == false)
+				{
+					<div class="form-group">
+						<label>Name</label>
+						<input class="form-control" type="text" @bind="kandidaat.Name" @bind:after="UpdateKandidaat" />
+
+						<label>Party</label>
+						<input class="form-control" type="text" @bind="kandidaat.Party" @bind:after="UpdateKandidaat" />
+
+						<label>ImagePath</label>
+						<input class="form-control" type="text" @bind=kandidaat.ImagePath @bind:after="UpdateKandidaat" />
+						
+						<label>ImageUrl</label>
+						<input class="form-control" type="text" @bind=kandidaat.ImageUrl @bind:after="UpdateKandidaat" />
+
+						<label>Description</label>
+						<input class="form-control" type="text" @bind=kandidaat.Description @bind:after="UpdateKandidaat" />
+
+					</div>
+				}
+				else
+				{
+					<div class="form-group">
+						<label>Name</label>
+						<input class="form-control" type="text" required @bind="Name"/>
+						<p>*required</p>
+
+						<label>Party</label>
+						<input class="form-control" type="text" required @bind="Party" />
+						<p>*required</p>
+
+						<label>ImagePath</label>
+						<input class="form-control" type="text" @bind="ImagePath" />
+
+						<label>ImageUrl</label>
+						<input class="form-control" type="text" @bind="ImageUrl" />
+
+						<label>Description</label>
+						<input class="form-control" type="text" @bind="Description"/>
+
+						<br />
+						 <button class="btn btn-primary form-control " @onclick="AddKandidaat">Add New Kandidaat</button> 
+
+						 <h5 style="Color:red">@Error</h5>
+					</div>
+				}
+			</div>
+			<div class="modal-footer">
+			</div>
+		</div>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public string? Title { get; set; }
+
+	[Parameter]
+	public bool IsVisible { get; set; }
+
+	[Parameter]
+	public EventCallback<bool> IsVisibleChanged { get; set; }
+
+	[Parameter]
+	public Kandidaat? kandidaat { get; set; }
+
+	[Parameter]
+	public bool NewKandidaat { get; set; }
+
+	string? Name;
+	string? Party;
+	string? ImagePath;
+	string? ImageUrl;
+	string? Description;
+
+	string? Error;
+
+
+	private async Task CloseModal()
+	{
+		IsVisible = false;
+		await IsVisibleChanged.InvokeAsync(IsVisible);
+
+	}
+
+
+	private void UpdateKandidaat()
+	{
+		if (kandidaat != null)
+		{
+			kandidaatservice.UpdateKandidaat(kandidaat);
+		}
+
+	}
+
+	private void AddKandidaat()
+	{
+		if (Name != null && Party != null)
+		{
+			var NewKandidaat = new Kandidaat { Name = Name, Party = Party, ImagePath = ImagePath, ImageUrl = ImageUrl, Description = Description };
+			kandidaatservice.AddKandidaat(NewKandidaat);
+			CloseModal();
+			Error = "";
+		}
+		else
+		{
+			Error = "Please Fill in all required fields!";
+		}
+	}
+}
+
+
+
