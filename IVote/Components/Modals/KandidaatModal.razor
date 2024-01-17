@@ -108,13 +108,13 @@
 
 	}
 
-	private void AddKandidaat()
+	private  async void AddKandidaat()
 	{
 		if (Name != null && Party != null)
 		{
 			var NewKandidaat = new Kandidaat { Name = Name, Party = Party, ImagePath = ImagePath, ImageUrl = ImageUrl, Description = Description };
 			kandidaatservice.AddKandidaat(NewKandidaat);
-			CloseModal();
+			await CloseModal();
 			Error = "";
 		}
 		else

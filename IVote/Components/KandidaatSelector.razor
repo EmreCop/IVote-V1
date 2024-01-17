@@ -1,7 +1,7 @@
 ﻿@rendermode InteractiveServer
 @inject KandidaatService kandidaatService;
 
-<select class="form-select" @onchange="HandleSelection">
+<select multiple class="form-select" @onchange="HandleSelection">
 	@foreach(var kandidaat in Kandidaten)
 	{
 	<option value="@kandidaat.Id">
@@ -18,17 +18,21 @@
 @code {
 
 	[Parameter]
-	public EventCallback<int> KanditaatSelected{ get; set; }
+	public EventCallback<List<int>> KanditaatSelected{ get; set; }
 
 
 	List<Kandidaat> Kandidaten => kandidaatService.GetAllKandidaten();
-
+	List<int> SelectedKandidaten = new();
 
 	async Task HandleSelection(ChangeEventArgs e)
 	{
+		foreach(var a in e.Value as string[])
+		{
+		}
 		if (int.TryParse(e?.Value?.ToString(), out int selectedId))
 		{
-			await KanditaatSelected.InvokeAsync(selectedId);
+			SelectedKandidaten.Add(selectedId);
+			await KanditaatSelected.InvokeAsync(SelectedKandidaten);
 		}
 	}
 }

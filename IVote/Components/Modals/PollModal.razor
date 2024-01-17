@@ -25,8 +25,8 @@
 
 						<label>ImagePath</label>
 						<input class="form-control" type="date" @bind=Poll.EndDate @bind:after="UpdatePoll" />
-						
-						<KandidaatSelector KanditaatSelected="HandleKandidaatSeleceted"/>
+						<label>KandidaatIDs</label>
+						<KandidaatSelector KanditaatSelected="HandleKandidaatSeleceted" />
 
 						
 
@@ -40,20 +40,13 @@
 						<p>*required</p>
 
 						<label>Party</label>
-						<input class="form-control" type="text" required @bind="Party" />
+						<input class="form-control" type="date" required @bind="StartDate" />
 						<p>*required</p>
 
 						<label>ImagePath</label>
-						<input class="form-control" type="text" @bind="ImagePath" />
-
-						<label>ImageUrl</label>
-						<input class="form-control" type="text" @bind="ImageUrl" />
-
-						<label>Description</label>
-						<input class="form-control" type="text" @bind="Description"/>
-
+						<input class="form-control" type="date" @bind="EndDate" />
 						<br />
-						 <button class="btn btn-primary form-control " @onclick="AddKandidaat">Add New Kandidaat</button> 
+						 <button class="btn btn-primary form-control " @onclick="AddNewPoll">Add New Poll</button> 
 
 						 <h5 style="Color:red">@Error</h5>
 					</div>
@@ -82,10 +75,9 @@
 	public bool NewPoll { get; set; }
 
 	string? Name;
-	string? Party;
-	string? ImagePath;
-	string? ImageUrl;
-	string? Description;
+	DateOnly? StartDate;
+	DateOnly? EndDate;
+
 
 	string? Error;
 
@@ -109,10 +101,10 @@
 
 	private void AddNewPoll()
 	{
-		if (Name != null && Party != null)
+		if (Name != null && StartDate != null && EndDate != null)
 		{
-			var NewKandidaat = new Kandidaat { Name = Name, Party = Party, ImagePath = ImagePath, ImageUrl = ImageUrl, Description = Description };
-			pollservice.AddPoll(NewKandidaat);
+			var NewPoll = new Poll { Naam = Name, StartDate = (DateOnly)StartDate, EndDate = (DateOnly)EndDate };
+			pollservice.AddPoll(NewPoll);
 			CloseModal();
 			Error = "";
 		}
@@ -122,13 +114,14 @@
 		}
 	}
 
-	void HandleKandidaatSeleceted(int id)
+	void HandleKandidaatSeleceted(List<int> Ids)
 	{
-		if( Poll != null && Poll.KanditaatIds == null)
+		if(Poll != null)
 		{
-			Poll.KanditaatIds = new();
+			Poll.KanditaatIds = Ids;
 		}
-		Poll?.KanditaatIds!.Add(id);
+		
+		UpdatePoll();
 	}
 }
 
