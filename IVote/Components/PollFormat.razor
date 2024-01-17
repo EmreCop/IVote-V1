@@ -1,0 +1,22 @@
+﻿@inject PollService pollservice
+@inject KandidaatService kandidaatService
+@rendermode InteractiveServer
+
+<div class="poll">
+	<div class="poll-header">
+	</div>
+	<div class="poll-body">
+		@foreach(var kandidaatid in poll?.KanditaatIds)
+		{
+			<KandinaatFormat kandidaat="kandidaatService.GetKandidaatById(kandidaatid)"/>
+		}
+
+	</div>
+
+</div>
+
+
+@code {
+	[Parameter]
+	public Poll? poll { get; set; }
+}

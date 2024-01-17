@@ -1,7 +1,34 @@
-﻿<h3>KandinaatFormat</h3>
+﻿@rendermode InteractiveServer
+@inject KandidaatService kandidaatService
+
+@if(kandidaat != null)
+{<div class="kandidaat">
+	<img @onclick="AddVote" alt="@kandidaat.ImagePath" src="@kandidaat.ImageUrl" />
+	<h5>@kandidaat.Name </h5>
+	<h5>@kandidaat.Description</h5>
+</div>
+}
+
+
+
+
+
+
 
 @code {
 
-  [Parameter]
-  public Kandidaat? kandidaat { get; set; }
+	[Parameter]
+	public Kandidaat? kandidaat { get; set; }
+
+
+	void AddVote()
+	{
+		if (kandidaat != null)
+		{
+			kandidaat.Votes++;
+			kandidaatService.UpdateKandidaat(kandidaat);
+		}
+		
+	}
+
 }

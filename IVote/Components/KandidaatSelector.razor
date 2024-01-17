@@ -26,6 +26,7 @@
 
 	async Task HandleSelection(ChangeEventArgs e)
 	{
+		SelectedKandidaten = new();
 		foreach (var selectedId in e.Value as string[])
 		{
 			SelectedKandidaten.Add(int.Parse(selectedId));
