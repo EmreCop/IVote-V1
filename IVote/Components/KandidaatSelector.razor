@@ -26,13 +26,11 @@
 
 	async Task HandleSelection(ChangeEventArgs e)
 	{
-		foreach(var a in e.Value as string[])
+		foreach (var selectedId in e.Value as string[])
 		{
-		}
-		if (int.TryParse(e?.Value?.ToString(), out int selectedId))
-		{
-			SelectedKandidaten.Add(selectedId);
+			SelectedKandidaten.Add(int.Parse(selectedId));
 			await KanditaatSelected.InvokeAsync(SelectedKandidaten);
 		}
+	
 	}
 }

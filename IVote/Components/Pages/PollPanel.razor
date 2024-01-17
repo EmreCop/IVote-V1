@@ -51,14 +51,14 @@
 		</tr>
 	</tbody>
 </table>
-<PollModal @bind-IsVisible="modalVisible" Poll="DummyPoll" Title="TitleModal" NewPoll="AddNewKandidaat" />
+<PollModal @bind-IsVisible="modalVisible" Poll="DummyPoll" Title="TitleModal" NewPoll="AddNewPoll" />
 
 @code
 {
 	List<Poll> Polls => pollService.GetallPoll();
 
 	bool modalVisible = false;
-	bool AddNewKandidaat;
+	bool AddNewPoll;
 	string? TitleModal;
 
 	Poll DummyPoll = new Poll { StartDate = DateOnly.FromDateTime(DateTime.Now), EndDate = DateOnly.FromDateTime(DateTime.UtcNow) };
@@ -72,7 +72,7 @@
 
 	void Edit(Poll EditedPoll)
 	{
-		AddNewKandidaat = false;
+		AddNewPoll = false;
 		TitleModal = EditedPoll.Naam;
 		DummyPoll = EditedPoll;
 		ShowModal();
@@ -80,7 +80,7 @@
 
 	void AddPoll()
 	{
-		AddNewKandidaat = true;
+		AddNewPoll = true;
 		TitleModal = "New Kandidaat";
 		ShowModal();
 

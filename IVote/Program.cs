@@ -33,6 +33,7 @@ builder.Services.AddTransient<KandidaatService>();
 builder.Services.AddTransient<PollService>();
 
 builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+	.AddRoles<IdentityRole>()
 	.AddEntityFrameworkStores<ApplicationDbContext>()
 	.AddSignInManager()
 	.AddDefaultTokenProviders();
