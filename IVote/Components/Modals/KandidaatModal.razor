@@ -7,7 +7,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">@Title</h5>
+				<h1 class="modal-title">@Title</h1>
 				<button type="button" class="close btn btn-danger" @onclick="CloseModal">
 					<span>&times;</span>
 				</button>
@@ -16,19 +16,19 @@
 				@if (kandidaat != null && NewKandidaat == false)
 				{
 					<div class="form-group">
-						<label>Name</label>
+						<label>Naam</label>
 						<input class="form-control" type="text" @bind="kandidaat.Name" @bind:after="UpdateKandidaat" />
 
-						<label>Party</label>
+						<label>Partij</label>
 						<input class="form-control" type="text" @bind="kandidaat.Party" @bind:after="UpdateKandidaat" />
 
-						<label>ImagePath</label>
+						<label>Foto root</label>
 						<input class="form-control" type="text" @bind=kandidaat.ImagePath @bind:after="UpdateKandidaat" />
 						
-						<label>ImageUrl</label>
+						<label>Foto (URL)</label>
 						<input class="form-control" type="text" @bind=kandidaat.ImageUrl @bind:after="UpdateKandidaat" />
 
-						<label>Description</label>
+						<label>Gegevens</label>
 						<input class="form-control" type="text" @bind=kandidaat.Description @bind:after="UpdateKandidaat" />
 
 					</div>
@@ -36,25 +36,25 @@
 				else
 				{
 					<div class="form-group">
-						<label>Name</label>
+						<label>Naam</label>
 						<input class="form-control" type="text" required @bind="Name"/>
 						<p>*required</p>
 
-						<label>Party</label>
+						<label>Partij</label>
 						<input class="form-control" type="text" required @bind="Party" />
 						<p>*required</p>
 
-						<label>ImagePath</label>
+						<label>Foto root</label>
 						<input class="form-control" type="text" @bind="ImagePath" />
 
-						<label>ImageUrl</label>
+						<label>Foto (URL)</label>
 						<input class="form-control" type="text" @bind="ImageUrl" />
 
-						<label>Description</label>
+						<label>Gegevens</label>
 						<input class="form-control" type="text" @bind="Description"/>
 
 						<br />
-						 <button class="btn btn-primary form-control " @onclick="AddKandidaat">Add New Kandidaat</button> 
+						 <button class="btn btn-primary form-control " @onclick="AddKandidaat">Voeg kandidaat toe</button> 
 
 						 <h5 style="Color:red">@Error</h5>
 					</div>
@@ -119,7 +119,7 @@
 		}
 		else
 		{
-			Error = "Please Fill in all required fields!";
+			Error = "Vul alle vereiste velden in!";
 		}
 	}
 }

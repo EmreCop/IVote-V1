@@ -17,13 +17,13 @@
         @if (Poll != null && NewPoll == false)
         {
           <div class="form-group">
-            <label>Name</label>
+            <label>Naam</label>
             <input class="form-control" type="text" @bind="Poll.Naam" @bind:after="UpdatePoll" />
 
-            <label>StartDate</label>
+            <label>Begin datum</label>
             <input class="form-control" type="date" @bind="Poll.StartDate" @bind:after="UpdatePoll" />
 
-            <label>EndDate</label>
+            <label>Eind datum</label>
             <input class="form-control" type="date" @bind=Poll.EndDate @bind:after="UpdatePoll" />
 
             <label>KandidaatIDs</label>
@@ -36,20 +36,20 @@
         else
         {
           <div class="form-group">
-            <label>Name</label>
+            <label>Naam</label>
             <input class="form-control" type="text" required @bind="Name" />
             <p>*required</p>
 
-            <label>StartDate</label>
+            <label>Begin datum</label>
             <input class="form-control" type="date" required @bind="StartDate" />
             <p>*required</p>
 
-            <label>EndDate</label>
+            <label>Eind datum</label>
             <input class="form-control" type="date" @bind="EndDate" />
             <KandidaatSelector KanditaatSelected="(e)=>Kandidaten = e" />
 
             <br />
-            <button class="btn btn-primary form-control " @onclick="AddNewPoll">Add New Poll</button>
+            <button class="btn btn-primary form-control " @onclick="AddNewPoll">Voeg </button>
 
             <h5 style="Color:red">@Error</h5>
           </div>
