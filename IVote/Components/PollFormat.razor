@@ -3,20 +3,24 @@
 @rendermode InteractiveServer
 
 <div class="poll">
-	<div class="poll-header">
-	</div>
-	<div class="poll-body">
-		@foreach(var kandidaatid in poll?.KanditaatIds)
-		{
-			<KandinaatFormat kandidaat="kandidaatService.GetKandidaatById(kandidaatid)"/>
-		}
+  <div class="poll-header">
+  </div>
+  <div class="poll-body">
+    @if (poll != null && poll.KanditaatIds != null && poll.IsActive)
+    {
+      @foreach (var kandidaatid in poll.KanditaatIds)
+      {
+        <KandinaatFormat kandidaat="kandidaatService.GetKandidaatById(kandidaatid)" />
+      }
+    }
 
-	</div>
+
+  </div>
 
 </div>
 
 
 @code {
-	[Parameter]
-	public Poll? poll { get; set; }
+  [Parameter]
+  public Poll? poll { get; set; }
 }
