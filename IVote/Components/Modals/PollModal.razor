@@ -26,7 +26,7 @@
             <label>Eind datum</label>
             <input class="form-control" type="date" @bind=Poll.EndDate @bind:after="UpdatePoll" />
 
-            <label>KandidaatIDs</label>
+            <label>Selecteer kandidaten</label>
             <KandidaatSelector KanditaatSelected="HandleKandidaatSeleceted" />
 
 
@@ -46,6 +46,7 @@
 
             <label>Eind datum</label>
             <input class="form-control" type="date" @bind="EndDate" />
+            <label>Selecteer kandidaten</label>
             <KandidaatSelector KanditaatSelected="(e)=>Kandidaten = e" />
 
             <br />

@@ -3,11 +3,9 @@
 
 @if(kandidaat != null)
 {<div class="kandidaat">
-	<img @onclick="AddVote" alt="@kandidaat.ImagePath" src="@kandidaat.ImageUrl" />
+		<img @onclick="AddVote" alt="@kandidaat.ImagePath" src="@kandidaat.ImageUrl" class="card-img-top"/>
 	<h5>@kandidaat.Name </h5>
 	<h5>@kandidaat.Description</h5>
-	<label>votes</label>
-	<h5>@kandidaat.Votes</h5>
 </div>
 }
 
