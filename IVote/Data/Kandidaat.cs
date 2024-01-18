@@ -12,5 +12,6 @@ namespace IVote.Data
 		public string? ImagePath { get; set; }
 		public string? ImageUrl { get; set;}
 		public int Votes { get; set; }
+
 	}
 }
