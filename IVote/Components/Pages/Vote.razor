@@ -2,19 +2,15 @@
 @rendermode InteractiveServer
 @inject PollService pollService;
 
-@foreach(var Poll in PollList)
+@foreach (var Poll in PollList)
 {
-	<PollFormat poll="Poll"/>
+  <PollFormat poll="Poll" />
+
 }
-
-
-
-
-
-
 
 @code {
-	List<Poll> PollList => pollService.GetallPoll();
+  List<Poll> PollList => pollService.GetallPoll();
 
 
 }
+s

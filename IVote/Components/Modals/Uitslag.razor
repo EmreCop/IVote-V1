@@ -1,0 +1,90 @@
+﻿@inherits ComponentBase
+@inject KandidaatService kandidaatservice
+@inject PollService pollservice
+@rendermode InteractiveServer
+
+
+<div class="modal" tabindex="-1" style="display: @(IsVisible ? "block" : "none")">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">@Title</h5>
+        <button type="button" class="close btn btn-danger" @onclick="CloseModal">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        @if (poll != null)
+        {
+          <p>@poll.TotalAmoutofVotes</p>
+
+        }
+
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+@code {
+  [Parameter]
+  public string? Title { get; set; }
+
+  [Parameter]
+  public bool IsVisible { get; set; }
+
+  [Parameter]
+  public EventCallback<bool> IsVisibleChanged { get; set; }
+
+  [Parameter]
+  public Poll? poll { get; set; }
+
+
+  int TotaalVotes = 0;
+  string? Error;
+
+
+  private async Task CloseModal()
+  {
+    IsVisible = false;
+    await IsVisibleChanged.InvokeAsync(IsVisible);
+
+  }
+
+
+  void CallculateTotalVotes()
+  {
+    TotaalVotes = 0;
+    @if (poll != null && poll.KanditaatIds != null)
+    {
+
+      foreach (var KandidaadId in poll.KanditaatIds)
+      {
+        var kandidaat = kandidaatservice.GetKandidaatById(KandidaadId);
+
+        TotaalVotes += kandidaat.Votes;
+        
+      }
+      @if (poll.TotalAmoutofVotes == null)
+      {
+        poll.TotalAmoutofVotes = new();
+      }
+      poll.TotalAmoutofVotes = TotaalVotes;
+      pollservice.UpdatePoll(poll);
+    }
+  }
+
+  protected override void OnParametersSet()
+  {
+    @if(IsVisible)
+    {
+         CallculateTotalVotes();
+    }
+    base.OnParametersSet();
+  }
+}
+
+
+
+

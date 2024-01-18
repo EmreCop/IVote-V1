@@ -14,13 +14,29 @@
       }
     }
 
-
+    <button class="btn btn-primary" @onclick="ShowModal">Uitslag</button>
   </div>
 
 </div>
 
 
+<Uitslag @bind-IsVisible="modalVisible" poll=" Dummypoll" />
+
 @code {
   [Parameter]
   public Poll? poll { get; set; }
+
+
+  Poll Dummypoll = new Poll { StartDate = DateOnly.FromDateTime(DateTime.Now), EndDate = DateOnly.FromDateTime(DateTime.UtcNow) };
+
+
+  bool modalVisible = false;
+  void ShowModal()
+  { @if (poll is not null)
+    {
+      Dummypoll = poll;
+      modalVisible = true;
+    }
+
+  }
 }
