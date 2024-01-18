@@ -8,7 +8,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">@Title</h5>
+        <h4 class="modal-title">Uitslag</h4>
         <button type="button" class="close btn btn-danger" @onclick="CloseModal">
           <span>&times;</span>
         </button>
@@ -16,8 +16,11 @@
       <div class="modal-body">
         @if (poll != null)
         {
-          <p>@poll.TotalAmoutofVotes</p>
-
+          <div>
+            <h5>Winaar</h5>
+            <hr />
+            <KandinaatFormat kandidaat="mostVoteKandidaat" />
+          </div>
         }
 
       </div>
@@ -43,7 +46,8 @@
 
   int TotaalVotes = 0;
   string? Error;
-
+  int MostVotes = 0;
+  Kandidaat? mostVoteKandidaat;
 
   private async Task CloseModal()
   {
@@ -53,7 +57,7 @@
   }
 
 
-  void CallculateTotalVotes()
+  void Callculations()
   {
     TotaalVotes = 0;
     @if (poll != null && poll.KanditaatIds != null)
@@ -64,22 +68,34 @@
         var kandidaat = kandidaatservice.GetKandidaatById(KandidaadId);
 
         TotaalVotes += kandidaat.Votes;
-        
+
+        if (kandidaat.Votes > MostVotes)
+        {
+          MostVotes = kandidaat.Votes;
+          mostVoteKandidaat = kandidaat;
+        }
       }
+
       @if (poll.TotalAmoutofVotes == null)
       {
         poll.TotalAmoutofVotes = new();
       }
       poll.TotalAmoutofVotes = TotaalVotes;
+      @if (mostVoteKandidaat != null)
+      {
+        poll.WinaarPollID = mostVoteKandidaat.Id;
+      }
       pollservice.UpdatePoll(poll);
     }
   }
 
+
+
   protected override void OnParametersSet()
   {
-    @if(IsVisible)
+    @if (IsVisible)
     {
-         CallculateTotalVotes();
+      Callculations();
     }
     base.OnParametersSet();
   }
