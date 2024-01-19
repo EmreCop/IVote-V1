@@ -1,0 +1,6 @@
+﻿.polls
+{
+  display:grid;
+  grid-template-rows:auto auto;
+  grid-row-gap:1rem;
+}

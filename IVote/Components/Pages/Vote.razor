@@ -1,13 +1,13 @@
 ﻿@page "/vote"
 @rendermode InteractiveServer
 @inject PollService pollService;
-
+<div class="polls">
 @foreach (var Poll in PollList)
 {
   <PollFormat poll="Poll" />
 
 }
-
+</div>
 
 @code {
   List<Poll> PollList => pollService.GetallPoll();

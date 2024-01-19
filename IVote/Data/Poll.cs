@@ -7,7 +7,7 @@ namespace IVote.Data
 {
   public class Poll
   {
-    private readonly KandidaatService? _kandidaatService;
+    //private readonly KandidaatService? _kandidaatService;
 
     [Key]
     public int Id { get; set; }
@@ -41,11 +41,11 @@ namespace IVote.Data
     //      {
     //        kandidaat.Votes = 0;
     //        _kandidaatService 
-            
+
     //      }
     //    }
     //  }
 
-    }
   }
 }
+
