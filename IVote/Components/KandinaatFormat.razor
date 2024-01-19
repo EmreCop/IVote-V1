@@ -1,12 +1,22 @@
 ﻿@rendermode InteractiveServer
 @inject KandidaatService kandidaatService
 
-@if(kandidaat != null)
-{<div class="kandidaat">
-		<img @onclick="AddVote" alt="@kandidaat.ImagePath" src="@kandidaat.ImageUrl" class="card-img-top"/>
-	<h5>@kandidaat.Name </h5>
-	<h5>@kandidaat.Description</h5>
-</div>
+@if (kandidaat != null)
+{
+    <div class="card" style="width: 18rem;">
+        <img alt="@kandidaat.ImagePath" src="@kandidaat.ImageUrl" class="card-img-top">
+        <div class="card-body">
+            <h5 class="card-title">@kandidaat.Name</h5>
+            <p class="card-text">@kandidaat.Description</p>
+            @if (!IsUitslag)
+            {
+                <a class="btn btn-primary" @onclick="AddVote">Stem</a>
+            }
+
+        </div>
+    </div>
+
+
 }
 
 
@@ -17,18 +27,21 @@
 
 @code {
 
-	[Parameter]
-	public Kandidaat? kandidaat { get; set; }
 
+    [Parameter]
+    public Kandidaat? kandidaat { get; set; }
 
-	void AddVote()
-	{
-		if (kandidaat != null)
-		{
-			kandidaat.Votes++;
-			kandidaatService.UpdateKandidaat(kandidaat);
-		}
-		
-	}
+    [Parameter]
+    public bool IsUitslag { get; set; }
+
+    void AddVote()
+    {
+        if (kandidaat != null)
+        {
+            kandidaat.Votes++;
+            kandidaatService.UpdateKandidaat(kandidaat);
+        }
+
+    }
 
 }
