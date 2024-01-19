@@ -48,4 +48,3 @@ namespace IVote.Data
 
     }
   }
-}

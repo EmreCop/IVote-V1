@@ -3,11 +3,19 @@
 
 @if (kandidaat != null)
 {
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 36rem;">
         <img alt="@kandidaat.ImagePath" src="@kandidaat.ImageUrl" class="card-img-top">
         <div class="card-body">
+            <label class="fw-bold">Naam</label>
+            <br />
             <h5 class="card-title">@kandidaat.Name</h5>
-            <p class="card-text">@kandidaat.Description</p>
+            <label class="fw-bold">Partij</label>
+            <br />
+            <h6 class="card-text">@kandidaat.Party</h6>
+            <hr />
+            <label class="fw-bold">Over</label>
+            <br />
+             <p class="card-text">@kandidaat.Description</p>
             @if (!IsUitslag)
             {
                 <a class="btn btn-primary" @onclick="AddVote">Stem</a>
