@@ -2,16 +2,12 @@
 @inject KandidaatService kandidaatService
 @rendermode InteractiveServer
 
-<div class="poll card" style="width: 18rem;">
-  <div class="poll-header">
     <h5 class="fs-1 text-center p-1">
-      @poll?.Naam
+        @poll?.Naam
     </h5>
-  </div>
+<div class="" style="width: 25rem">
   <div class="poll">
-    <div class="poll-header">
-    </div>
-    <div class="poll-body">
+        <div class="poll-body parent">
       @if (poll != null && poll.KanditaatIds != null && poll.IsActive)
       {
         var kadidaten = new List<int>(poll.KanditaatIds); ;
@@ -30,14 +26,36 @@
           }
 
         }
-        <button class="btn btn-danger" @onclick="ShowModal">Uitslag</button>
       }
 
-
+            <button class="btn btn-success" @onclick="ShowModal">Uitslag</button>
     </div>
-
+        
   </div>
+    
 </div>
+
+
+<style>
+    .parent {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
+    }
+
+    .grid {
+        grid-area: 1 / 1 / 2 / 2;
+    }
+    .poll-header {
+        height: 30px;
+        padding-bottom: 10px;
+    }
+    .btn-success {
+        font-size: 100px;
+    }
+</style>
 
 
 
