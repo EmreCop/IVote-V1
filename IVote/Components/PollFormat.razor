@@ -3,50 +3,51 @@
 @rendermode InteractiveServer
 
 <div class="poll card" style="width: 18rem;">
-    <div class="poll-header">
-        <h5 class="fs-1 text-center p-1">
-            @poll?.Naam
-        </h5>
-    </div>
-    <div class="poll-body">
-        @if (poll != null && poll.KanditaatIds != null && poll.IsActive)
-        {
-            @foreach (var kandidaatid in poll.KanditaatIds)
-            {
-                <KandinaatFormat kandidaat="kandidaatService.GetKandidaatById(kandidaatid)" />
-            }
-            <button class="btn btn-danger" @onclick="ShowModal">Uitslag</button>
-        }
-<div class="poll">
 	<div class="poll-header">
+		<h5 class="fs-1 text-center p-1">
+			@poll?.Naam
+		</h5>
 	</div>
 	<div class="poll-body">
 		@if (poll != null && poll.KanditaatIds != null && poll.IsActive)
 		{
-			var kadidaten = new List<int>(poll.KanditaatIds); ;
-
-			foreach (var kandidaatid in kadidaten)
+			@foreach (var kandidaatid in poll.KanditaatIds)
 			{
-				var kandidaat = kandidaatService.GetKandidaatById(kandidaatid);
-				if (kandidaat != null)
-				{
-					<KandinaatFormat kandidaat="kandidaat" />
-				}
-				else
-				{
-					poll.KanditaatIds.Remove(kandidaatid);
-					pollservice.UpdatePoll(poll);
-				}
-
+				<KandinaatFormat kandidaat="kandidaatService.GetKandidaatById(kandidaatid)" />
 			}
 			<button class="btn btn-danger" @onclick="ShowModal">Uitslag</button>
 		}
+		<div class="poll">
+			<div class="poll-header">
+			</div>
+			<div class="poll-body">
+				@if (poll != null && poll.KanditaatIds != null && poll.IsActive)
+				{
+					var kadidaten = new List<int>(poll.KanditaatIds); ;
+
+					foreach (var kandidaatid in kadidaten)
+					{
+						var kandidaat = kandidaatService.GetKandidaatById(kandidaatid);
+						if (kandidaat != null)
+						{
+							<KandinaatFormat kandidaat="kandidaat" />
+						}
+						else
+						{
+							poll.KanditaatIds.Remove(kandidaatid);
+							pollservice.UpdatePoll(poll);
+						}
+
+					}
+					<button class="btn btn-danger" @onclick="ShowModal">Uitslag</button>
+				}
 
 
-    </div>
+			</div>
 
+		</div>
+	</div>
 </div>
-
 
 
 <Uitslag @bind-IsVisible="modalVisible" poll=" Dummypoll" />
@@ -68,4 +69,4 @@
 		}
 
 	}
-}
+		}

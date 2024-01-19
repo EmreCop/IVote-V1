@@ -22,7 +22,7 @@ namespace IVote.Data.Services
 		{
 			using var context = _dbContextFactory.CreateDbContext();
 			var kandidaat = context.Kandidaat.SingleOrDefault(x => x.Id == id);
-			return kandidaat ?? throw new Exception("Kandidaat Does not Exist");
+			return kandidaat ! ;
 		}
 
 		public void UpdateKandidaat(Kandidaat kandidaat)
