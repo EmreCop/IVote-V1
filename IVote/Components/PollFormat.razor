@@ -3,40 +3,54 @@
 @rendermode InteractiveServer
 
 <div class="poll">
-  <div class="poll-header">
-  </div>
-  <div class="poll-body">
-    @if (poll != null && poll.KanditaatIds != null && poll.IsActive)
-    {
-      @foreach (var kandidaatid in poll.KanditaatIds)
-      {
-        <KandinaatFormat kandidaat="kandidaatService.GetKandidaatById(kandidaatid)" />
-      }
-    }
+	<div class="poll-header">
+	</div>
+	<div class="poll-body">
+		@if (poll != null && poll.KanditaatIds != null && poll.IsActive)
+		{
+			var kadidaten = new List<int>(poll.KanditaatIds); ;
 
-    <button class="btn btn-primary" @onclick="ShowModal">Uitslag</button>
-  </div>
+			foreach (var kandidaatid in kadidaten)
+			{
+				var kandidaat = kandidaatService.GetKandidaatById(kandidaatid);
+				if (kandidaat != null)
+				{
+					<KandinaatFormat kandidaat="kandidaat" />
+				}
+				else
+				{
+					poll.KanditaatIds.Remove(kandidaatid);
+					pollservice.UpdatePoll(poll);
+				}
+
+			}
+			<button class="btn btn-danger" @onclick="ShowModal">Uitslag</button>
+		}
+
+
+	</div>
 
 </div>
+
 
 
 <Uitslag @bind-IsVisible="modalVisible" poll=" Dummypoll" />
 
 @code {
-  [Parameter]
-  public Poll? poll { get; set; }
+	[Parameter]
+	public Poll? poll { get; set; }
 
 
-  Poll Dummypoll = new Poll { StartDate = DateOnly.FromDateTime(DateTime.Now), EndDate = DateOnly.FromDateTime(DateTime.UtcNow) };
+	Poll Dummypoll = new Poll { StartDate = DateOnly.FromDateTime(DateTime.Now), EndDate = DateOnly.FromDateTime(DateTime.UtcNow) };
 
 
-  bool modalVisible = false;
-  void ShowModal()
-  { @if (poll is not null)
-    {
-      Dummypoll = poll;
-      modalVisible = true;
-    }
+	bool modalVisible = false;
+	void ShowModal()
+	{ @if (poll is not null)
+		{
+			Dummypoll = poll;
+			modalVisible = true;
+		}
 
-  }
+	}
 }
